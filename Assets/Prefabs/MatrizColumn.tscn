@@ -1,0 +1,23 @@
+[gd_scene load_steps=2 format=3 uid="uid://hueesr8ngwbe"]
+
+[ext_resource type="Script" path="res://Assets/Scripts/MatrizColumn.cs" id="1_cjw2v"]
+
+[node name="MatrizColumn" type="VBoxContainer" node_paths=PackedStringArray("matrizChar1", "matrizChar2", "matrizChar3")]
+size_flags_horizontal = 4
+script = ExtResource("1_cjw2v")
+matrizChar1 = NodePath("Matriz01")
+matrizChar2 = NodePath("Matriz02")
+matrizChar3 = NodePath("Matriz03")
+
+[node name="Matriz01" type="Label" parent="."]
+layout_mode = 2
+theme_override_constants/line_spacing = 7
+text = "27"
+
+[node name="Matriz02" type="Label" parent="."]
+layout_mode = 2
+text = "27"
+
+[node name="Matriz03" type="Label" parent="."]
+layout_mode = 2
+text = "27"
