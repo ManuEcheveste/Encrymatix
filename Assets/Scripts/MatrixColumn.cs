@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class MatrizColumn : VBoxContainer
+public partial class MatrixColumn : VBoxContainer
 {
 	[Export] public Label matrizChar1;
 	[Export] public Label matrizChar2;

@@ -1,0 +1,52 @@
+[gd_scene load_steps=4 format=3 uid="uid://4bcl20sjxexl"]
+
+[ext_resource type="Script" path="res://Assets/Scripts/MatrixInput.cs" id="1_m2mqe"]
+
+[sub_resource type="ImageTexture" id="ImageTexture_ladin"]
+
+[sub_resource type="ImageTexture" id="ImageTexture_4w1yp"]
+
+[node name="MatrixColumnInput" type="VBoxContainer" node_paths=PackedStringArray("matrixInput1", "matrixInput2", "matrixInput3")]
+custom_minimum_size = Vector2(0, 123)
+alignment = 1
+script = ExtResource("1_m2mqe")
+matrixInput1 = NodePath("MatrixValue0")
+matrixInput2 = NodePath("MatrixValue1")
+matrixInput3 = NodePath("MatrixValue2")
+
+[node name="MatrixValue0" type="SpinBox" parent="."]
+layout_mode = 2
+theme_override_icons/updown = SubResource("ImageTexture_ladin")
+allow_greater = true
+allow_lesser = true
+alignment = 1
+update_on_text_changed = true
+custom_arrow_step = 10.0
+select_all_on_focus = true
+
+[node name="MatrixValue1" type="SpinBox" parent="."]
+layout_mode = 2
+theme_override_icons/updown = SubResource("ImageTexture_4w1yp")
+allow_greater = true
+allow_lesser = true
+alignment = 1
+update_on_text_changed = true
+custom_arrow_step = 10.0
+select_all_on_focus = true
+
+[node name="MatrixValue2" type="SpinBox" parent="."]
+layout_mode = 2
+theme_override_icons/updown = SubResource("ImageTexture_4w1yp")
+allow_greater = true
+allow_lesser = true
+alignment = 1
+update_on_text_changed = true
+custom_arrow_step = 10.0
+select_all_on_focus = true
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 2
+size_flags_vertical = 3
+text = "-"
+
+[connection signal="pressed" from="Button" to="." method="DeleteColumn"]
