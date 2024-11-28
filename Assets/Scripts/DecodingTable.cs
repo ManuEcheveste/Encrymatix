@@ -8,16 +8,16 @@ public partial class DecodingTable : Node
 
 	public double[,] encryptKey = new double[3,3]
 	{
-		{1,1,3},
-		{-1,4,0},
-		{3,0,6}
+		{1,2,1},
+		{3,0,-1},
+		{4,0,2}
 	};
 	
 	public double[,] decryptKey = new double[3,3]
 	{
-		{-4, 1, 2},
-		{-1, 0.5, 0.5},
-		{2, -0.5, -5.0/6.0}
+		{0, 1.0/5.0, 1.0/10.0},
+		{1.0/2.0, 1.0/10.0, -1.0/5.0},
+		{0, -2.0/5.0, 3.0/10.0}
 	};
 
 	#region Libraries
@@ -186,7 +186,7 @@ public partial class DecodingTable : Node
                     {
                         temp += keyUsed[i, k] * matrix[k, j];
                     }
-                    newMatrix[i, j] = temp;
+                    newMatrix[i, j] = Math.Round(temp);
                 }
             }
 		
@@ -194,103 +194,4 @@ public partial class DecodingTable : Node
 		GD.Print("Returning value");
 		return newMatrix;
 	}
-
-
-/*	
-	
-	public float[,] currentMat = null;
-	
-	public int currentIndexMat = 0;
-	
-	
-	public void SetMatrixValue(float value)
-	{
-		if (currentIndexMat == null)
-		{
-			currentMat = new float[3,3];//testing, el último 3 será cambiado luego por las columnas esas
-		}
-		
-		int row = currentIndexMat / 3;
-		int col = currentIndexMat % 3;
-		
-		currentMat[row,col] = value;
-		currentIndexMat++;
-	}
-	
-	
-public double[,] EncryptMatrix(double[,] matrix, bool isEncrypting = true)
-{
-	int rows = matrix.GetLength(0); // Número de filas de matrix
-	int cols = matrix.GetLength(1); // Número de columnas de matrix
-	GD.Print("rows: " + rows + "\ncols: " + cols);
-	int targetRows = 3; // En este caso es fijo como 3
-
-	GD.Print("Filas :" + rows);
-	GD.Print("Columnas :" + cols);
-
-	double[,] currentMatrix = isEncrypting ? encryptKey : decryptKey;
-
-	if (rows != targetRows)
-	{
-		GD.PrintErr("Las matrices no coinciden. Algo petateó");
-		throw new Exception("Las filas de la matriz no coinciden con las dimensiones de la clave.");
-	}
-
-	/*if (cols != targetRows)
-	{
-		GD.PrintErr("Las columnas de la matriz deben coincidir con el número de filas de la clave.");
-		throw new Exception("Las columnas de la matriz no coinciden con las dimensiones de la clave.");
-	}
-
-	double[,] newMatrix = new double[rows, cols]; // Ajustar tamaño según las dimensiones de matrix
-
-	for (int i = 0; i < rows; i++)
-	{
-		for (int j = 0; j < cols; j++) // Ajustar al número de columnas de matrix
-		{
-			newMatrix[i, j] = 0;
-			for (int k = 0; k < targetRows; k++) // Asegurar que k no exceda el límite de targetRows
-			{
-				newMatrix[i, j] += currentMatrix[k, j] * matrix[i, k]; // Línea crítica
-			}
-		}
-	}
-
-	return newMatrix;
-}
-
-
-
-
-
-
-public string DecryptMatrix(double[,] matrix)
-{
-	int rows = matrix.GetLength(0);
-	int cols = matrix.GetLength(1);
-	string decodedMessage = "";
-
-	// Iteramos sobre cada valor de la matriz
-	for (int i = 0; i < rows; i++)
-	{
-		for (int j = 0; j < cols; j++)
-		{
-			int value = (int)Math.Round(matrix[i, j]);
-			GD.Print($"Valor antes de convertir a char: {value}");  // Imprimir el valor antes de convertirlo
-
-			// Convertimos el valor a char
-			char character = ConvertValueToChar(value);
-			GD.Print($"Carácter convertido: '{character}'");  // Imprimir el carácter convertido
-
-			decodedMessage += character;
-		}
-	}
-
-	return decodedMessage;
-}
-*/
-
-	
-	
-	
 }

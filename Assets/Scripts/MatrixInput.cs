@@ -11,7 +11,9 @@ public partial class MatrixInput : VBoxContainer
 	
 	public void DeleteColumn()
 	{
-		//chance indicarle al manager que ya no existo
+		var parent = GetParent();
+		var parentNode = parent as MatrixInputManager; 
+		parentNode.ColumnDeleted();
 		QueueFree();
 	}
 	

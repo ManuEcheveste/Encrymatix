@@ -11,6 +11,7 @@ public partial class MatrixInputManager : HBoxContainer
 	[Export] public DecodingTable decodingTable;
 	[Export] public Label messageLabel;
 	[Export] public MatrixManager matrixManager; //To show decrypted Matrix
+	[Export] public AudioManager audioManager;
 
 #region GUI
 	public void AddColumn()
@@ -83,9 +84,10 @@ public partial class MatrixInputManager : HBoxContainer
 		messageLabel.Text = decriptedMessage;
 	}
 
-
-
-
+	public void ColumnDeleted()
+	{
+		audioManager.PlayDeleteSFX();
+	}
 
 }
 	

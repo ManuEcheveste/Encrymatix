@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://c7v1ao0i6hkn2"]
+[gd_scene load_steps=22 format=3 uid="uid://c7v1ao0i6hkn2"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/DecodingTable.cs" id="1_fg2rk"]
 [ext_resource type="Script" path="res://Assets/Scripts/Encrypt.cs" id="1_nglc7"]
@@ -10,6 +10,9 @@
 [ext_resource type="AudioStream" uid="uid://52glw0g8jmdh" path="res://Assets/SFX/boot.wav" id="8_e4suk"]
 [ext_resource type="Script" path="res://Assets/Scripts/AudioManager.cs" id="9_87sfp"]
 [ext_resource type="Texture2D" uid="uid://ru0laaqoa6ne" path="res://Assets/Sprites/Logo-utez.png" id="9_cb4p6"]
+[ext_resource type="AudioStream" uid="uid://c2x2hmpr85n2l" path="res://Assets/SFX/confirm.wav" id="11_g6ohb"]
+[ext_resource type="AudioStream" uid="uid://dx3yrseg6nnkj" path="res://Assets/SFX/convert.wav" id="11_ldaek"]
+[ext_resource type="AudioStream" uid="uid://8s56nbu833g8" path="res://Assets/SFX/delete.wav" id="12_pvlt8"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2jj1i"]
 bg_color = Color(0, 0.529412, 0.415686, 1)
@@ -57,7 +60,7 @@ grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(-419, 144)
 script = ExtResource("1_fg2rk")
-targetMatrix = NodePath("PanelContainer/TabContainer/Encrypt/OutputRegion/EncryptedMatrix")
+targetMatrix = NodePath("PanelContainer/TabContainer/Encrypt/Menu/OutputRegion/EncryptedMatrix/EncryptedMatrix")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 layout_mode = 1
@@ -85,195 +88,249 @@ visible = false
 layout_mode = 2
 script = ExtResource("1_nglc7")
 decodingTable = NodePath("../../..")
-messageInput = NodePath("InputRegion/MessageInput")
-rawMatrixManager = NodePath("OutputRegion/MatrixMessage")
-encryptedMatrixManager = NodePath("OutputRegion/EncryptedMatrix")
+messageInput = NodePath("Menu/InputRegion/MessageHolder/MessageInput")
+rawMatrixManager = NodePath("Menu/OutputRegion/Matrix/Matrix/MatrixMessage")
+encryptedMatrixManager = NodePath("Menu/OutputRegion/EncryptedMatrix/EncryptedMatrix")
 metadata/_tab_index = 0
 
-[node name="InputRegion" type="VBoxContainer" parent="PanelContainer/TabContainer/Encrypt"]
+[node name="Menu" type="VBoxContainer" parent="PanelContainer/TabContainer/Encrypt"]
 layout_mode = 1
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_left = 25.0
-offset_top = -62.5
-offset_right = 450.0
-offset_bottom = 63.5
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
 grow_vertical = 2
 
-[node name="MessageLabel" type="Label" parent="PanelContainer/TabContainer/Encrypt/InputRegion"]
+[node name="Spacer" type="Control" parent="PanelContainer/TabContainer/Encrypt/Menu"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="InputRegion" type="VBoxContainer" parent="PanelContainer/TabContainer/Encrypt/Menu"]
+layout_mode = 2
+
+[node name="MessageLabel" type="Label" parent="PanelContainer/TabContainer/Encrypt/Menu/InputRegion"]
 layout_mode = 2
 theme = ExtResource("3_3qg20")
-text = "Inserte su mensaje:"
+text = "Enter your message:"
 horizontal_alignment = 1
 
-[node name="MessageInput" type="LineEdit" parent="PanelContainer/TabContainer/Encrypt/InputRegion"]
+[node name="MessageHolder" type="HBoxContainer" parent="PanelContainer/TabContainer/Encrypt/Menu/InputRegion"]
+layout_mode = 2
+alignment = 1
+
+[node name="MessageInput" type="LineEdit" parent="PanelContainer/TabContainer/Encrypt/Menu/InputRegion/MessageHolder"]
+custom_minimum_size = Vector2(400, 0)
 layout_mode = 2
 theme = ExtResource("3_3qg20")
-placeholder_text = "Mensaje..."
+placeholder_text = "Message..."
 alignment = 1
 clear_button_enabled = true
 
-[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/TabContainer/Encrypt/InputRegion"]
+[node name="ButtonHolder" type="HBoxContainer" parent="PanelContainer/TabContainer/Encrypt/Menu/InputRegion"]
 layout_mode = 2
 size_flags_horizontal = 4
 alignment = 1
 
-[node name="Button" type="Button" parent="PanelContainer/TabContainer/Encrypt/InputRegion/HBoxContainer"]
+[node name="EncryptButton" type="Button" parent="PanelContainer/TabContainer/Encrypt/Menu/InputRegion/ButtonHolder"]
 custom_minimum_size = Vector2(100, 40)
 layout_mode = 2
 size_flags_horizontal = 4
 theme = ExtResource("3_3qg20")
-text = "Encriptar"
+text = "Encrypt"
 
-[node name="OutputRegion" type="VBoxContainer" parent="PanelContainer/TabContainer/Encrypt"]
-layout_mode = 1
-anchors_preset = 6
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -303.0
-offset_top = -227.5
-offset_right = -37.0
-offset_bottom = 227.5
-grow_horizontal = 0
-grow_vertical = 2
-
-[node name="MatrixMessageTitle" type="Label" parent="PanelContainer/TabContainer/Encrypt/OutputRegion"]
+[node name="Spacer2" type="Control" parent="PanelContainer/TabContainer/Encrypt/Menu"]
 layout_mode = 2
-theme = ExtResource("3_3qg20")
-text = "Mensaje en Matriz"
-
-[node name="MatrixMessage" type="HBoxContainer" parent="PanelContainer/TabContainer/Encrypt/OutputRegion" node_paths=PackedStringArray("currentColumn")]
-layout_mode = 2
-alignment = 1
-script = ExtResource("3_i5f3v")
-currentColumn = NodePath("MatrizColumn")
-
-[node name="MatrizColumn" parent="PanelContainer/TabContainer/Encrypt/OutputRegion/MatrixMessage" instance=ExtResource("4_j1ja8")]
-layout_mode = 2
-
-[node name="Control" type="Control" parent="PanelContainer/TabContainer/Encrypt/OutputRegion"]
-layout_mode = 2
+size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="EncryptedMatrixTitle" type="Label" parent="PanelContainer/TabContainer/Encrypt/OutputRegion"]
+[node name="OutputRegion" type="HBoxContainer" parent="PanelContainer/TabContainer/Encrypt/Menu"]
+layout_mode = 2
+
+[node name="Spacer" type="Control" parent="PanelContainer/TabContainer/Encrypt/Menu/OutputRegion"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Matrix" type="VBoxContainer" parent="PanelContainer/TabContainer/Encrypt/Menu/OutputRegion"]
+layout_mode = 2
+
+[node name="MatrixMessageTitle" type="Label" parent="PanelContainer/TabContainer/Encrypt/Menu/OutputRegion/Matrix"]
 layout_mode = 2
 theme = ExtResource("3_3qg20")
-text = "Matriz Encriptada"
+text = "Matrix Message:"
+horizontal_alignment = 1
 
-[node name="EncryptedMatrix" type="HBoxContainer" parent="PanelContainer/TabContainer/Encrypt/OutputRegion" node_paths=PackedStringArray("currentColumn")]
+[node name="Matrix" type="HBoxContainer" parent="PanelContainer/TabContainer/Encrypt/Menu/OutputRegion/Matrix"]
+layout_mode = 2
+alignment = 1
+
+[node name="MatrixMessage" type="HBoxContainer" parent="PanelContainer/TabContainer/Encrypt/Menu/OutputRegion/Matrix/Matrix" node_paths=PackedStringArray("currentColumn")]
 layout_mode = 2
 alignment = 1
 script = ExtResource("3_i5f3v")
 currentColumn = NodePath("MatrizColumn")
 
-[node name="MatrizColumn" parent="PanelContainer/TabContainer/Encrypt/OutputRegion/EncryptedMatrix" instance=ExtResource("4_j1ja8")]
+[node name="MatrizColumn" parent="PanelContainer/TabContainer/Encrypt/Menu/OutputRegion/Matrix/Matrix/MatrixMessage" instance=ExtResource("4_j1ja8")]
 layout_mode = 2
+
+[node name="Spacer2" type="Control" parent="PanelContainer/TabContainer/Encrypt/Menu/OutputRegion"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="EncryptedMatrix" type="VBoxContainer" parent="PanelContainer/TabContainer/Encrypt/Menu/OutputRegion"]
+layout_mode = 2
+
+[node name="EncryptedMatrixTitle" type="Label" parent="PanelContainer/TabContainer/Encrypt/Menu/OutputRegion/EncryptedMatrix"]
+layout_mode = 2
+theme = ExtResource("3_3qg20")
+text = "Encrypted Matrix:"
+
+[node name="EncryptedMatrix" type="HBoxContainer" parent="PanelContainer/TabContainer/Encrypt/Menu/OutputRegion/EncryptedMatrix" node_paths=PackedStringArray("currentColumn")]
+layout_mode = 2
+alignment = 1
+script = ExtResource("3_i5f3v")
+currentColumn = NodePath("MatrizColumn")
+
+[node name="MatrizColumn" parent="PanelContainer/TabContainer/Encrypt/Menu/OutputRegion/EncryptedMatrix/EncryptedMatrix" instance=ExtResource("4_j1ja8")]
+layout_mode = 2
+
+[node name="Spacer3" type="Control" parent="PanelContainer/TabContainer/Encrypt/Menu/OutputRegion"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Spacer3" type="Control" parent="PanelContainer/TabContainer/Encrypt/Menu"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
 [node name="Decrypt" type="TabBar" parent="PanelContainer/TabContainer"]
 layout_mode = 2
 metadata/_tab_index = 1
 
-[node name="InputRegion" type="VBoxContainer" parent="PanelContainer/TabContainer/Decrypt"]
-custom_minimum_size = Vector2(300, 0)
+[node name="Menu" type="VBoxContainer" parent="PanelContainer/TabContainer/Decrypt"]
 layout_mode = 1
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_left = 36.0
-offset_top = -109.5
-offset_right = 386.0
-offset_bottom = 111.5
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
 grow_vertical = 2
+
+[node name="Spacer" type="Control" parent="PanelContainer/TabContainer/Decrypt/Menu"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="InputRegion" type="VBoxContainer" parent="PanelContainer/TabContainer/Decrypt/Menu"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="MessageLabel" type="Label" parent="PanelContainer/TabContainer/Decrypt/InputRegion"]
+[node name="MessageLabel" type="Label" parent="PanelContainer/TabContainer/Decrypt/Menu/InputRegion"]
 layout_mode = 2
 theme = ExtResource("3_3qg20")
 text = "Encrypted Matrix:"
 horizontal_alignment = 1
 
-[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/TabContainer/Decrypt/InputRegion"]
-custom_minimum_size = Vector2(0, 150)
+[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/TabContainer/Decrypt/Menu/InputRegion"]
+custom_minimum_size = Vector2(400, 125)
 layout_direction = 2
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_d3mfw")
 follow_focus = true
 vertical_scroll_mode = 0
 
-[node name="MatrixInputManager" type="HBoxContainer" parent="PanelContainer/TabContainer/Decrypt/InputRegion/ScrollContainer" node_paths=PackedStringArray("addButton", "decodingTable", "messageLabel", "matrixManager")]
+[node name="MatrixInputManager" type="HBoxContainer" parent="PanelContainer/TabContainer/Decrypt/Menu/InputRegion/ScrollContainer" node_paths=PackedStringArray("addButton", "decodingTable", "messageLabel", "matrixManager", "audioManager")]
 custom_minimum_size = Vector2(0, 140)
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_vertical = 3
 alignment = 1
 script = ExtResource("3_n7smu")
 addButton = NodePath("AddColumn")
-decodingTable = NodePath("../../../../../..")
-messageLabel = NodePath("../../../OutputRegion/Message")
-matrixManager = NodePath("../../../OutputRegion/MatrixMessage")
+decodingTable = NodePath("../../../../../../..")
+messageLabel = NodePath("../../../OutputRegion/Message/Message")
+matrixManager = NodePath("../../../OutputRegion/DecryptedMatrix/MatrixMessage")
+audioManager = NodePath("../../../../../../../SFX")
 
-[node name="MatrixColumnInput" parent="PanelContainer/TabContainer/Decrypt/InputRegion/ScrollContainer/MatrixInputManager" instance=ExtResource("4_auqr6")]
+[node name="MatrixColumnInput" parent="PanelContainer/TabContainer/Decrypt/Menu/InputRegion/ScrollContainer/MatrixInputManager" instance=ExtResource("4_auqr6")]
 layout_mode = 2
 
-[node name="AddColumn" type="Button" parent="PanelContainer/TabContainer/Decrypt/InputRegion/ScrollContainer/MatrixInputManager"]
+[node name="AddColumn" type="Button" parent="PanelContainer/TabContainer/Decrypt/Menu/InputRegion/ScrollContainer/MatrixInputManager"]
 custom_minimum_size = Vector2(50, 130)
 layout_direction = 2
 layout_mode = 2
 text = "+"
 
-[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/TabContainer/Decrypt/InputRegion"]
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/TabContainer/Decrypt/Menu/InputRegion"]
 layout_mode = 2
 alignment = 1
 
-[node name="Decrypt" type="Button" parent="PanelContainer/TabContainer/Decrypt/InputRegion/HBoxContainer"]
+[node name="Decrypt" type="Button" parent="PanelContainer/TabContainer/Decrypt/Menu/InputRegion/HBoxContainer"]
 custom_minimum_size = Vector2(100, 40)
 layout_mode = 2
 theme = ExtResource("3_3qg20")
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 text = "Decrypt"
 
-[node name="OutputRegion" type="VBoxContainer" parent="PanelContainer/TabContainer/Decrypt"]
-layout_mode = 1
-anchors_preset = 6
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -320.0
-offset_top = -192.5
-offset_right = -36.0
-offset_bottom = 193.5
-grow_horizontal = 0
-grow_vertical = 2
+[node name="Spacer2" type="Control" parent="PanelContainer/TabContainer/Decrypt/Menu"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
-[node name="RegularMatrixTitle" type="Label" parent="PanelContainer/TabContainer/Decrypt/OutputRegion"]
+[node name="OutputRegion" type="HBoxContainer" parent="PanelContainer/TabContainer/Decrypt/Menu"]
+layout_mode = 2
+
+[node name="Spacer" type="Control" parent="PanelContainer/TabContainer/Decrypt/Menu/OutputRegion"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="DecryptedMatrix" type="VBoxContainer" parent="PanelContainer/TabContainer/Decrypt/Menu/OutputRegion"]
+layout_mode = 2
+
+[node name="RegularMatrixTitle" type="Label" parent="PanelContainer/TabContainer/Decrypt/Menu/OutputRegion/DecryptedMatrix"]
 layout_mode = 2
 theme = ExtResource("3_3qg20")
 text = "Decrypted Matrix:"
 horizontal_alignment = 1
 
-[node name="MatrixMessage" type="HBoxContainer" parent="PanelContainer/TabContainer/Decrypt/OutputRegion"]
+[node name="MatrixMessage" type="HBoxContainer" parent="PanelContainer/TabContainer/Decrypt/Menu/OutputRegion/DecryptedMatrix"]
 layout_mode = 2
 alignment = 1
 script = ExtResource("3_i5f3v")
 
-[node name="Control" type="Control" parent="PanelContainer/TabContainer/Decrypt/OutputRegion"]
+[node name="Spacer2" type="Control" parent="PanelContainer/TabContainer/Decrypt/Menu/OutputRegion"]
 layout_mode = 2
+size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="MessageTitle" type="Label" parent="PanelContainer/TabContainer/Decrypt/OutputRegion"]
+[node name="Message" type="VBoxContainer" parent="PanelContainer/TabContainer/Decrypt/Menu/OutputRegion"]
+layout_mode = 2
+
+[node name="MessageTitle" type="Label" parent="PanelContainer/TabContainer/Decrypt/Menu/OutputRegion/Message"]
 layout_mode = 2
 theme = ExtResource("3_3qg20")
 text = "Message:"
 horizontal_alignment = 1
 
-[node name="Message" type="Label" parent="PanelContainer/TabContainer/Decrypt/OutputRegion"]
+[node name="Message" type="Label" parent="PanelContainer/TabContainer/Decrypt/Menu/OutputRegion/Message"]
 layout_mode = 2
 theme = ExtResource("3_3qg20")
 horizontal_alignment = 1
+
+[node name="Spacer3" type="Control" parent="PanelContainer/TabContainer/Decrypt/Menu/OutputRegion"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Spacer3" type="Control" parent="PanelContainer/TabContainer/Decrypt/Menu"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
 [node name="Misc" type="TabBar" parent="PanelContainer/TabContainer"]
 visible = false
@@ -321,11 +378,18 @@ Mitzi Yessenia Arrieta Ignacio
 fit_content = true
 autowrap_mode = 0
 
-[node name="SFX" type="AudioStreamPlayer2D" parent="."]
+[node name="SFX" type="AudioStreamPlayer2D" parent="." node_paths=PackedStringArray("sfx")]
 stream = ExtResource("8_e4suk")
 autoplay = true
 script = ExtResource("9_87sfp")
+sfx = NodePath(".")
+convertSFX = ExtResource("11_ldaek")
+deleteSFX = ExtResource("12_pvlt8")
+confirmSFX = ExtResource("11_g6ohb")
 
-[connection signal="pressed" from="PanelContainer/TabContainer/Encrypt/InputRegion/HBoxContainer/Button" to="PanelContainer/TabContainer/Encrypt" method="EncryptMessage"]
-[connection signal="pressed" from="PanelContainer/TabContainer/Decrypt/InputRegion/ScrollContainer/MatrixInputManager/AddColumn" to="PanelContainer/TabContainer/Decrypt/InputRegion/ScrollContainer/MatrixInputManager" method="AddColumn"]
-[connection signal="pressed" from="PanelContainer/TabContainer/Decrypt/InputRegion/HBoxContainer/Decrypt" to="PanelContainer/TabContainer/Decrypt/InputRegion/ScrollContainer/MatrixInputManager" method="DecryptMatrix"]
+[connection signal="pressed" from="PanelContainer/TabContainer/Encrypt/Menu/InputRegion/ButtonHolder/EncryptButton" to="PanelContainer/TabContainer/Encrypt" method="EncryptMessage"]
+[connection signal="pressed" from="PanelContainer/TabContainer/Encrypt/Menu/InputRegion/ButtonHolder/EncryptButton" to="SFX" method="PlayConvert"]
+[connection signal="pressed" from="PanelContainer/TabContainer/Decrypt/Menu/InputRegion/ScrollContainer/MatrixInputManager/AddColumn" to="PanelContainer/TabContainer/Decrypt/Menu/InputRegion/ScrollContainer/MatrixInputManager" method="AddColumn"]
+[connection signal="pressed" from="PanelContainer/TabContainer/Decrypt/Menu/InputRegion/ScrollContainer/MatrixInputManager/AddColumn" to="SFX" method="PlayConfirm"]
+[connection signal="pressed" from="PanelContainer/TabContainer/Decrypt/Menu/InputRegion/HBoxContainer/Decrypt" to="PanelContainer/TabContainer/Decrypt/Menu/InputRegion/ScrollContainer/MatrixInputManager" method="DecryptMatrix"]
+[connection signal="pressed" from="PanelContainer/TabContainer/Decrypt/Menu/InputRegion/HBoxContainer/Decrypt" to="SFX" method="PlayConvert"]

@@ -8,6 +8,8 @@
 
 [node name="MatrixColumnInput" type="VBoxContainer" node_paths=PackedStringArray("matrixInput1", "matrixInput2", "matrixInput3")]
 custom_minimum_size = Vector2(0, 123)
+offset_right = 67.0
+offset_bottom = 136.0
 alignment = 1
 script = ExtResource("1_m2mqe")
 matrixInput1 = NodePath("MatrixValue0")

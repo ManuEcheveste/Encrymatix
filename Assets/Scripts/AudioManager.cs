@@ -3,13 +3,30 @@ using System;
 
 public partial class AudioManager : AudioStreamPlayer2D
 {
-	// Called when the node enters the scene tree for the first time.
-	public override void _Ready()
+	[Export] public AudioStreamPlayer2D sfx;
+	[Export] public AudioStream convertSFX;
+	[Export] public AudioStream deleteSFX;
+	[Export] public AudioStream confirmSFX;
+
+
+	public void PlayConvert()
 	{
+		Stop();
+		Stream = convertSFX;
+		Play();
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
+	public void PlayConfirm()
 	{
+		Stop();
+		Stream = confirmSFX;
+		Play();
+	}
+
+	public void PlayDeleteSFX()
+	{
+		Stop();
+		Stream = deleteSFX;
+		Play();
 	}
 }
