@@ -22,7 +22,8 @@ run/low_processor_mode=true
 boot_splash/bg_color=Color(1, 1, 1, 1)
 boot_splash/image="res://Assets/Sprites/Logo-utez.png"
 boot_splash/fullsize=false
-config/icon="res://icon.svg"
+config/icon="res://Assets/Sprites/logo.png"
+config/windows_native_icon="res://Assets/Sprites/Icons/logo.ico"
 boot_splash/minimum_display_time=1000
 
 [display]
